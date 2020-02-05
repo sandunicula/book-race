@@ -5,10 +5,10 @@ import cats.data.EitherT
 import cats.implicits._
 import edu.book.race.domain.{BookAlreadyExistsError, BookNotFoundError}
 
-class BookValidationInterpreter[F[_] : Applicative](bookRepositoryAlgebra: BookRepositoryAlgebra[F]) extends BookValidationAlgebra[F] {
+class BookValidationInterpreter[F[_] : Applicative](bookRepository: BookRepositoryAlgebra[F]) extends BookValidationAlgebra[F] {
   override def doesNotExists(book: Book): EitherT[F, BookAlreadyExistsError, Unit] =
     EitherT {
-      bookRepositoryAlgebra.findByTitleAndAuthor(book.title, book.author).map {
+      bookRepository.findByTitleAndAuthor(book.title, book.author).map {
         matches => if (matches.isEmpty) Right(()) else Left(BookAlreadyExistsError(book))
       }
     }
@@ -17,11 +17,16 @@ class BookValidationInterpreter[F[_] : Applicative](bookRepositoryAlgebra: BookR
     EitherT {
       bookId match {
         case Some(id) =>
-          bookRepositoryAlgebra.get(id).map {
+          bookRepository.get(id).map {
             case Some(_) => Right(())
             case _ => Left(BookNotFoundError)
           }
         case _ => Either.left[BookNotFoundError.type, Unit](BookNotFoundError).pure[F]
       }
     }
+}
+
+object BookValidationInterpreter {
+  def apply[F[_] : Applicative](bookRepositoryAlgebra: BookRepositoryAlgebra[F]): BookValidationInterpreter[F] =
+    new BookValidationInterpreter(bookRepositoryAlgebra)
 }

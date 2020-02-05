@@ -37,3 +37,7 @@ class InMemBookRepositoryInterpreter[F[_] : Applicative] extends BookRepositoryA
   override def list(): F[List[Book]] =
     books.values.toList.pure[F]
 }
+
+object InMemBookRepositoryInterpreter {
+  def apply[F[_] : Applicative]: InMemBookRepositoryInterpreter[F] = new InMemBookRepositoryInterpreter[F]()
+}
