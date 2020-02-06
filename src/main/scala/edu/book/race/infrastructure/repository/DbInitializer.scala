@@ -1,8 +1,8 @@
-package edu.book.race.infrastructure
+package edu.book.race.infrastructure.repository
 
 import edu.book.race.domain.books.{Book, BookRepositoryAlgebra}
 
-object DbConfig {
+object DbInitializer {
 
   def initializeDb[F[_]](bookRepositoryAlgebra: BookRepositoryAlgebra[F]): Unit = {
     bookRepositoryAlgebra.create(Book(None, "I Am Legend", "Martin"))

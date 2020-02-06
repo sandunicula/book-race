@@ -1,7 +1,8 @@
-package edu.book.race.domain.books
+package edu.book.race.infrastructure.repository
 
 import cats.Applicative
 import cats.implicits._
+import edu.book.race.domain.books.{Book, BookRepositoryAlgebra}
 
 import scala.util.Random
 

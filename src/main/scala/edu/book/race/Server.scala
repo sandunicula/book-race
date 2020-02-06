@@ -3,9 +3,9 @@ package edu.book.race
 import cats.effect._
 import cats.implicits._
 import edu.book.race.config.ApplicationConfig
-import edu.book.race.domain.books.{BookService, BookValidationInterpreter, InMemBookRepositoryInterpreter}
-import edu.book.race.infrastructure.DbConfig
+import edu.book.race.domain.books.{BookService, BookValidationInterpreter}
 import edu.book.race.infrastructure.endpoints.BookEndpoints
+import edu.book.race.infrastructure.repository.{DbInitializer, InMemBookRepositoryInterpreter}
 import org.http4s.implicits._
 import org.http4s.server.Router
 import org.http4s.server.blaze._
@@ -22,7 +22,7 @@ object Server extends IOApp {
       bookValidator = BookValidationInterpreter[IO](bookRepo)
       bookService = BookService[IO](bookRepo, bookValidator)
       httpApp = Router("/book" -> BookEndpoints[IO](bookService)).orNotFound
-      _ <- Resource.liftF(IO(DbConfig.initializeDb(bookRepo)))
+      _ <- Resource.liftF(IO(DbInitializer.initializeDb(bookRepo)))
       server <- BlazeServerBuilder[IO]
         .bindHttp(config.server.port, config.server.host)
         .withHttpApp(httpApp)
