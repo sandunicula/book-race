@@ -5,6 +5,7 @@ scalaVersion := "2.12.7"
 
 val http4sVersion = "0.20.17"
 val mockitoVersion = "1.11.2"
+val pureConfigVersion = "0.12.2"
 
 scalacOptions ++= Seq(
   "-encoding", "UTF-8", // source files are in UTF-8
@@ -33,7 +34,8 @@ libraryDependencies ++= Seq(
   "org.http4s" %% "http4s-circe" % http4sVersion,
   "io.circe" %% "circe-generic" % "0.11.2"
 )
-
+libraryDependencies += "com.github.pureconfig" %% "pureconfig" % pureConfigVersion
+libraryDependencies += "com.github.pureconfig" %% "pureconfig-cats-effect" % pureConfigVersion
 libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.2.3"
 
 addCompilerPlugin("org.spire-math" %% "kind-projector" % "0.9.3")
