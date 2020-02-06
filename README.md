@@ -1,3 +1,6 @@
+# Status
+Build: ![Scala CI](https://github.com/vbrenister/book-race/workflows/Scala%20CI/badge.svg?branch=master)
+
 # Description
 
 Prototype application that implements the book racing web service.
