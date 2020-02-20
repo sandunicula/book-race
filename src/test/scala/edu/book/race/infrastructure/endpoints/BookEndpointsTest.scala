@@ -2,6 +2,7 @@ package edu.book.race.infrastructure.endpoints
 
 import cats.data.EitherT
 import cats.effect.IO
+import edu.book.race.assets._
 import edu.book.race.domain.BookNotFoundError
 import edu.book.race.domain.books.{Book, BookService}
 import io.circe.generic.auto._

@@ -31,8 +31,8 @@ class BookEndpoints[F[_] : Monad : Sync] extends Http4sDsl[F] {
   }
 
   private[this] def getByIdEndpoint(bookService: BookService[F]): HttpRoutes[F] = HttpRoutes.of[F] {
-    case GET -> Root / id =>
-      bookService.get(id.toLong).value flatMap {
+    case GET -> Root / LongVar(id) =>
+      bookService.get(id).value flatMap {
         case Right(book) => Ok(book.asJson)
         case Left(BookNotFoundError) => NotFound("Book not found")
       }

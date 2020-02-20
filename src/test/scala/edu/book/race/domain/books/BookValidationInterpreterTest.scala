@@ -2,6 +2,7 @@ package edu.book.race.domain.books
 
 import cats.Id
 import cats.syntax.option._
+import edu.book.race.assets._
 import edu.book.race.domain.{BookAlreadyExistsError, BookNotFoundError}
 import org.mockito.scalatest.MockitoSugar
 import org.scalatest.flatspec.AnyFlatSpec
@@ -17,11 +18,11 @@ class BookValidationInterpreterTest extends AnyFlatSpec with Matchers with Mocki
     when(bookRepository.findByTitleAndAuthor("Title", "Author")) thenReturn List(testBook)
     when(bookRepository.findByTitleAndAuthor(*, *)) thenReturn List()
 
-    bookValidator.doesNotExists(Book(None, "New title", "New Author")).value shouldBe Right(())
+    bookValidator.doesNotExists(Book(None, "New title", "New Author", now)).value shouldBe Right(())
   }
 
   it should "return BookAlreadyExistsError if validation fails" in {
-    when(bookRepository.findByTitleAndAuthor("Title", "Author")) thenReturn List(testBook)
+    when(bookRepository.findByTitleAndAuthor("test", "author")) thenReturn List(testBook)
 
     bookValidator.doesNotExists(testBook).value shouldBe Left(BookAlreadyExistsError(testBook))
   }

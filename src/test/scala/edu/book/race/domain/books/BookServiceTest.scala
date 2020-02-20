@@ -3,6 +3,7 @@ package edu.book.race.domain.books
 import cats.Id
 import cats.data.EitherT
 import edu.book.race.domain.{BookAlreadyExistsError, BookNotFoundError}
+import edu.book.race.assets._
 import org.mockito.scalatest.MockitoSugar
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
